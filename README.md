@@ -11,7 +11,9 @@ Email: __________
 Vị trí ứng tuyển: __________
 
 Giới thiệu bản thân (ghi trong khung): ______________________
-
+<p align="center">
+  <img src="./đ.png" width="400">
+</p>
 Template giống như tờ đơn in sẵn: có khung, tiêu đề, chỗ điền; phần cố định do người soạn in sẵn, phần biến đổi là chỗ người dùng điền.
 
 Trên web, template có thể là mã HTML, có các tiêu đề (mình sẽ gọi cái này là các yếu tố cố định trên template) và có placeholder (ví dụ bên dưới) để sau đó hệ thống điền dữ liệu để thay thế các placeholder này. 
