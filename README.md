@@ -115,6 +115,28 @@ Nguyên nhân thay vì in ra {{7*7}} thay vì 49 là do trong source code, ta
 ```
 Nếu name chứa __cú pháp template__ (ví dụ ```{{ ... }}``` hoặc ```{% ... %}```), thì sau khi ghép vào, chuỗi template trở thành một template do người dùng kiểm soát và Jinja2 sẽ cố gắng __thực thi biểu thức/template logic đó → đây chính là điều tạo ra SSTI.__
 
+## Cách ngăn chặn
+
+Vì **SSTI** cũng là một loại lỗ hổng về ``injection``, nên để ngăn chặn nó ta cần **validate** được gửi từ người dùng. Có thể dùng filter ~~đơn giarn~~ để lọc ra cái kí tự không nên xuất hiện.
+
+```python
+name = request.args.get('name')
+   email = request.args.get('email')
+   position = request.args.get('position')
+   if not name:
+      name = "trống"
+   if not email:
+      email = "trống"
+   if not position:
+      position = "trống"
+   simple_filter=["flag", "*", "\"", "'", "\\", "/", ";", ":", "~", "`", "+", "=", "&", "^", "%", "$", "#", "@", "!", "\n", "x", "import", "os", "request", "attr", "sys", "builtins", "class", "subclass", "config", "json", "sessions", "self", "templat", "view", "wrapper", "test", "log", "help", "cli", "blueprints", "signals", "typing", "ctx", "mro", "base", "url", "cycler", "get", "join", "name", "g.", "lipsum", "application", "render"]
+   for char_num in range(len(simple_filter)):
+      if simple_filter[char_num] in name.lower() or simple_filter[char_num] in email.lower() or simple_filter[char_num] in position.lower():
+         name = "trống"
+         email = "trống"
+         position = "trống"
+         break
+```
 
 
 
