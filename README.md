@@ -143,6 +143,21 @@ name = request.args.get('name')
 </p>
 
 
+hoặc thay vì nối chuỗi, source code có thể viết như vậy:
+
+```python
+
+<body>
+  <h1>Xin chào {{name}} </h1>
+  <p>Email của bạn là: {{email}}</p>
+  <p>Vị trí ứng tuyển: {{position}}</p>
+</body>
+</html>''' 
+   return render_template_string(template, name=name, email=email, position=position)
+```
+
+Khi đó Jinja sẽ escape tham số nhận được, làm cho **atacker** không thể chèn được __cú pháp template__
+
 
 
 
