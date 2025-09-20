@@ -117,7 +117,7 @@ Nếu name chứa __cú pháp template__ (ví dụ ```{{ ... }}``` hoặc ```{% 
 
 ## Cách ngăn chặn
 
-Vì **SSTI** cũng là một loại lỗ hổng về ``injection``, nên để ngăn chặn nó ta cần **validate** được gửi từ người dùng. Có thể dùng filter ~~đơn giarn~~ để lọc ra cái kí tự không nên xuất hiện.
+Vì **SSTI** cũng là một loại lỗ hổng về ``injection``, nên để ngăn chặn nó ta cần **validate** được gửi từ người dùng. Có thể dùng filter ~~đơn giản~~ để lọc ra cái kí tự không nên xuất hiện.
 
 ```python
 name = request.args.get('name')
@@ -137,6 +137,10 @@ name = request.args.get('name')
          position = "trống"
          break
 ```
+
+<p align="left">
+  <img src="./images/img5" width="700">
+</p>
 
 
 
