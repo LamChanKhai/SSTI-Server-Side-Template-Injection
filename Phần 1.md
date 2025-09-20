@@ -158,7 +158,16 @@ hoặc thay vì nối chuỗi, source code có thể viết như vậy:
 
 Khi đó Jinja sẽ escape tham số nhận được, làm cho **atacker** không thể chèn được __cú pháp template__
 
+<p align="left">
+  <img src="./images/img6" width="700">
+</p>
 
+## Kết 
+OK, tổng kết lại nội dung bài này:
+- Khái niệm template và SSTI.
+- Điều kiện để có thể khai thác được SSTI (**template nối chuỗi với untrusted data**).
+- Cách ngăn chặn.
 
+Hy vọng sẽ sớm có phần 2 các bước triển khai SSTI attack. ~~hoặc là không~~
 
 
