@@ -89,4 +89,12 @@ def hello_world():
    return render_template_string(template)
 ```
 
-Trong trường hợp này dữ liệu được lấy từ các tham số qua Method **GET** do người dùng truyền vào
+Trong trường hợp này dữ liệu được lấy từ các tham số qua Method **GET** do người dùng truyền vào.
+
+<p align="center">
+  <img src="./image2" width="700">
+</p>
+
+Xem qua code, ta thấy không có bất kì hàm nào dùng để ```validate``` cả 3 dữ liệu do người dùng truyền vào. Hãy thử một payload khác để kiểm tra.
+
+
