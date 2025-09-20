@@ -32,3 +32,57 @@ Trên web, **template** có thể là mã HTML, có các tiêu đề (mi�
 Như cái tên của nó, đây là một lỗi ```Injection```, chúng ta sẽ tiêm payload độc hại và nó sẽ được xữ lý ở phía server và sau khi engine render template có thể sinh ra những kết quả không mong muốn. Trong đa số trường hợp xảy ra lỗ hổng **SSTI** đều mang lại các hậu quả to lớn cho server, bởi các payload SSTI được thực thi trực tiếp tại server và thường dẫn tới tấn công thực thi mã nguồn tùy ý từ xa ```(RCE - Remote Code Execution)```.
 
 ## Cụ thể **Server-Side Template Injection – SSTI** diễn ra như thế nào?
+Như đã nói ở trên, **engine** sẽ lấy các dữ liệu liên quan điền vào ```placeholder``` rồi render ra web page tương ứng, nếu như các dữ liệu được dùng không phải do trực tiếp truyền vào thì việc khai thác **SSTI** là không thể. Như mã này:
+
+```python
+@app.route('/')
+def hello_world():
+   user = {'name':'Khai','email':'khai@gmail.com','position':'Intern'} # Xem đây là dữ liệu từ database
+   name = user.get('name')
+   email = user.get('email')
+   position = user.get('position')
+   template='''<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Ví dụ Template</title>
+</head>
+<body>
+  <h1>Xin chào '''+name+''' </h1>
+  <p>Email của bạn là: '''+email+'''</p>
+  <p>Vị trí ứng tuyển: '''+position+'''</p>
+</body>
+</html>''' 
+   return render_template_string(template)
+```
+
+Trong ví dụ này khi người dùng truy cập vào trang chủ, ứng dụng sẽ thực thi hàm ```hello_world()```. Vì dữ liệu được điền vào được lấy từ ```Database``` nên người khai thác không thể trực tiếp tiêm payload độc hại được, dẫn đến không thể khai thác ```SSTI``` _(Ứng dụng có validate khi thêm mới một user vào Database :)) )_.
+
+Nhưng nếu lập trình viên dùng dữ liệu từ người dùng để tăng tính linh hoạt và tương tác của ứng dụng như lại quên ```validate``` dữ liệu được nhận thì nó lại là câu chuyện khác.
+
+```python
+@app.route('/')
+def hello_world():
+   name = request.args.get('name')
+   email = request.args.get('email')
+   position = request.args.get('position')
+   if not email:
+      email = "trống"
+   if not position:
+      position = "trống"
+   template='''<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Ví dụ Template</title>
+</head>
+<body>
+  <h1>Xin chào '''+name+''' </h1>
+  <p>Email của bạn là: '''+email+'''</p>
+  <p>Vị trí ứng tuyển: '''+position+'''</p>
+</body>
+</html>''' 
+   return render_template_string(template)
+```
+
+Trong trường hợp này dữ liệu được lấy từ các tham số qua Method **GET** do người dùng truyền vào
