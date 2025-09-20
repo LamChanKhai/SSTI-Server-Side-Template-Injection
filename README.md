@@ -5,7 +5,7 @@
 Hãy giả sử bạn ứng tuyển vào một công ty và công ty đó có sẵn hàng loạt mẫu đơn tuyển dụng, ứng viên chỉ cần lấy và điền thông tin vào đơn. 
 
 <p align="center">
-  <img src="./donmau" width="700">
+  <img src="./images/donmau" width="700">
 </p>
 Template giống như tờ đơn in sẵn: có khung, tiêu đề, chỗ điền; phần cố định do người soạn in sẵn, phần biến đổi là chỗ người dùng điền.
 
@@ -57,7 +57,7 @@ def hello_world():
 ```
 
 <p align="left">
-  <img src="./image.png" width="700">
+  <img src="./images/image.png" width="700">
 </p>
 
 Trong ví dụ này khi người dùng truy cập vào trang chủ, ứng dụng sẽ thực thi hàm ```hello_world()```. Vì dữ liệu được điền vào được lấy từ ```Database``` nên người khai thác không thể trực tiếp tiêm payload độc hại được, dẫn đến không thể khai thác ```SSTI``` _(Ứng dụng có validate khi thêm mới một user vào Database :)) )_.
@@ -92,16 +92,32 @@ def hello_world():
 Trong trường hợp này dữ liệu được lấy từ các tham số qua Method **GET** do người dùng truyền vào.
 
 <p align="left">
-  <img src="./img3" width="700">
+  <img src="./images/image2" width="700">
 </p>
 
 Xem qua code, ta thấy không có bất kì hàm nào dùng để ```validate``` cả 3 dữ liệu do người dùng truyền vào. Hãy thử một payload khác để kiểm tra.
 <p align="left">
-  <img src="./image2" width="700">
+  <img src="./images/img3" width="700">
 </p>
 
 Thay vì in ra dữ liệu mà kẻ tấn công truyền vào, ứng dụng lại in ra 49, điều đó chứng tỏ ứng dụng có thể bị khai thác ```SSTI```. Bây giờ chỉ cần thay đổi payload là kẻ tấn công đã có thể __RCE__ rồi.
 
-**Nhưng mà tại sao lại như vậy?** 
+## Nhưng mà tại sao lại như vậy?
+
+<p align="left">
+  <img src="./images/img4.jpg" width="400">
+</p>
+
+Nguyên nhân thay vì in ra {{7*7}} thay vì 49 là do trong source code, ta có thể thấy tham số được nối chuỗi trực tiếp vào template.
+
+```python
+<h1>Xin chào '''+name+''' </h1>
+```
+Nếu name chứa __cú pháp template__ (ví dụ ```{{ ... }}``` hoặc ```{% ... %}```), thì sau khi ghép vào, chuỗi template trở thành một template do người dùng kiểm soát và Jinja2 sẽ cố gắng __thực thi biểu thức/template logic đó → đây chính là điều tạo ra SSTI.__
+
+
+
+
+
 
 
