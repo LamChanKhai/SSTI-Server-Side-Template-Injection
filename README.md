@@ -91,10 +91,17 @@ def hello_world():
 
 Trong trường hợp này dữ liệu được lấy từ các tham số qua Method **GET** do người dùng truyền vào.
 
-<p align="center">
-  <img src="./image2" width="700">
+<p align="left">
+  <img src="./img3" width="700">
 </p>
 
 Xem qua code, ta thấy không có bất kì hàm nào dùng để ```validate``` cả 3 dữ liệu do người dùng truyền vào. Hãy thử một payload khác để kiểm tra.
+<p align="left">
+  <img src="./image2" width="700">
+</p>
+
+Thay vì in ra dữ liệu mà kẻ tấn công truyền vào, ứng dụng lại in ra 49, điều đó chứng tỏ ứng dụng có thể bị khai thác ```SSTI```. Bây giờ chỉ cần thay đổi payload là kẻ tấn công đã có thể __RCE__ rồi.
+
+**Nhưng mà tại sao lại như vậy?** 
 
 
