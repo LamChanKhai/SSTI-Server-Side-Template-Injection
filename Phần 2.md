@@ -51,6 +51,6 @@ Nếu không được nhả lỗi, ta có thể xác định ```engine``` 
 
 [___Nguồn ảnh ở đây___](https://book.hacktricks.wiki/en/pentesting-web/ssti-server-side-template-injection/index.html)
 
-[___Xem thêm ở đây___](https://book.hacktricks.wiki/en/pentesting-web/ssti-server-side-template-injection/index.html))
+Ngoài cách thủ công ra, ta có thể xác định được engine bằng các tools như ```SSTImap```, ```TInjA``` [___Xem thêm ở đây___](https://book.hacktricks.wiki/en/pentesting-web/ssti-server-side-template-injection/index.html)
 
-tools
+
